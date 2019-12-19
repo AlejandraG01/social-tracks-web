@@ -10,6 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { Container } from '@material-ui/core';
+import SpotifyPlayer from 'react-spotify-web-playback';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,6 +44,14 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   const classes = useStyles();
+  let saved_user = JSON.parse(sessionStorage.getItem('user'));
+  let tracks_uris;
+
+  if (saved_user !== undefined && saved_user !== null) {
+    tracks_uris = saved_user.spotify_top_tracks.items
+      .filter((track) => track.type === 'track')
+      .map((filtered_track) => filtered_track.uri);
+  }
 
   const onSuccess = async (data) => {
     const accessToken = data.access_token;
@@ -50,7 +59,13 @@ function App() {
     const response = await loginSpotify(accessToken);
     const { user } = response;
     sessionStorage.setItem('user', JSON.stringify(user));
+    saved_user = user;
 
+    if (saved_user !== undefined && saved_user !== null) {
+      tracks_uris = saved_user.spotify_top_tracks.items
+        .filter((track) => track.type === 'track')
+        .map((filtered_track) => filtered_track.uri);
+    }
     console.log("RESPOSTA", response);
   }
 
@@ -61,6 +76,7 @@ function App() {
     const response = await loginMastodon(authCode, userId);
     const { user } = response;
     sessionStorage.setItem('user', JSON.stringify(user));
+
 
     console.log("RESPOSTA", response);
   }
@@ -73,6 +89,7 @@ function App() {
     console.log("FAILED MASTODON", data);
   }
 
+  console.log(tracks_uris);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -88,6 +105,7 @@ function App() {
               redirectUri={SPOTIFY_REDIRECT_URL}
               onSuccess={onSuccess}
               onFailure={onFailure}
+              scope={'streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state'}
             />
             <MastodonLogin
               className={classes.button}
@@ -101,6 +119,10 @@ function App() {
           <Typography variant="h4" component="span">
             Faça login com o Spotify e com Mastodon.
           </Typography>
+          <SpotifyPlayer
+            token={sessionStorage.getItem('access_token')}
+            uris={tracks_uris}
+          />
         </Container>
       </div>
     </React.Fragment>
