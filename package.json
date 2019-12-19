@@ -11,7 +11,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-social-login": "^3.4.6",
-    "react-spotify-login": "^0.9.1"
+    "react-spotify-login": "^0.9.1",
+    "react-spotify-web-playback": "^0.6.0"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
