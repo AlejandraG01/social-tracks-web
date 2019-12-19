@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import SpotifyLogin from 'react-spotify-login';
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URL, MASTODON_AUTH_URL } from './config';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URL, SPOTIFY_SCOPES, MASTODON_AUTH_URL } from './config';
 import { loginSpotify, loginMastodon } from './services/UsersService';
 import MastodonLogin from './MastodonLogin';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,8 +21,8 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
-  toolbar:{
-    backgroundColor:'#790e8b'
+  toolbar: {
+    backgroundColor: '#790e8b'
   },
   mainContent: {
     display: 'flex',
@@ -103,6 +103,7 @@ function App() {
               className={classes.button}
               clientId={SPOTIFY_CLIENT_ID}
               redirectUri={SPOTIFY_REDIRECT_URL}
+              scope={SPOTIFY_SCOPES}
               onSuccess={onSuccess}
               onFailure={onFailure}
               scope={'streaming user-read-email user-read-private user-read-playback-state user-modify-playback-state'}
