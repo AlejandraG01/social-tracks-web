@@ -11,6 +11,7 @@ export const API_URL = apiUrl.development;
 
 export const SPOTIFY_CLIENT_ID = "2caaba5cd2d9417bb272957a76ff6970";
 export const SPOTIFY_REDIRECT_URL = "http://localhost:3001/login_spotify";
+export const SPOTIFY_SCOPES = 'streaming user-follow-read user-library-read user-top-read user-read-email';
 
 // const mastodonLoginUrl = {
 //     development: `${API_URL}/users/login_mastodon`,
