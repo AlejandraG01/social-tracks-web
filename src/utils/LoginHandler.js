@@ -10,6 +10,8 @@ export const saveSpotifyToken = spotifyToken => {
   return spotifyToken;
 };
 
+export const getSpotifyToken = () => sessionStorage.getItem("spotifyToken");
+
 export const getLoggedUser = () => JSON.parse(sessionStorage.getItem("user"));
 
 export const isLoggedIn = () => getLoggedUser() !== null;
