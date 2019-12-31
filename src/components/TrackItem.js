@@ -32,7 +32,7 @@ const TrackItem = ({ name, imageUrl, artistName, albumName, trackPlayUrl }) => {
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar alt="Remy Sharp" src={imageUrl} />
+        <Avatar alt="Album image" src={imageUrl} />
       </ListItemAvatar>
       <ListItemText
         primary={name}
@@ -61,7 +61,7 @@ const TrackItem = ({ name, imageUrl, artistName, albumName, trackPlayUrl }) => {
 
 TrackItem.propTypes = {
   name: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
   artistName: PropTypes.string.isRequired,
   albumName: PropTypes.string.isRequired,
   trackPlayUrl: PropTypes.string.isRequired
