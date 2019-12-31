@@ -27,6 +27,9 @@ const MusicList = ({ tracks }) => {
               track.album.images.length > 0 ? track.album.images[0].url : null
             }
             trackPlayUrl={track.preview_url}
+            externalPlayUrl={
+              track.preview_url ? null : track.external_urls.spotify
+            }
           />
           <Divider variant="inset" component="li" />
         </div>

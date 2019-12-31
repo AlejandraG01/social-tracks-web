@@ -10,6 +10,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
+import LinkIcon from "@material-ui/icons/Link";
 
 const useStyles = makeStyles(theme => ({
   inline: {
@@ -17,16 +18,35 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const TrackItem = ({ name, imageUrl, artistName, albumName, trackPlayUrl }) => {
+const TrackItem = ({
+  name,
+  imageUrl,
+  artistName,
+  albumName,
+  trackPlayUrl,
+  externalPlayUrl
+}) => {
   const classes = useStyles();
   const [playing, setPlaying] = useState(false);
   const [playingAudio] = useState(new Audio(trackPlayUrl));
 
   const handlePlay = () => {
+    if (externalPlayUrl) {
+      window.open(externalPlayUrl, "_blank");
+      return;
+    }
+
     if (playing) playingAudio.pause();
     else playingAudio.play();
 
     setPlaying(!playing);
+  };
+
+  const renderPlayIcon = () => {
+    if (externalPlayUrl) return <LinkIcon />;
+
+    if (playing) return <PauseCircleFilledIcon />;
+    else return <PlayCircleFilledIcon />;
   };
 
   return (
@@ -52,7 +72,7 @@ const TrackItem = ({ name, imageUrl, artistName, albumName, trackPlayUrl }) => {
       />
       <ListItemSecondaryAction>
         <IconButton onClick={handlePlay} edge="end" aria-label="delete">
-          {playing ? <PauseCircleFilledIcon /> : <PlayCircleFilledIcon />}
+          {renderPlayIcon()}
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
@@ -64,7 +84,14 @@ TrackItem.propTypes = {
   imageUrl: PropTypes.string,
   artistName: PropTypes.string.isRequired,
   albumName: PropTypes.string.isRequired,
-  trackPlayUrl: PropTypes.string.isRequired
+  trackPlayUrl: PropTypes.string,
+  externalPlayUrl: PropTypes.string
+};
+
+TrackItem.defaultProps = {
+  imageUrl: null,
+  trackPlayUrl: null,
+  externalPlayUrl: null
 };
 
 export default TrackItem;
