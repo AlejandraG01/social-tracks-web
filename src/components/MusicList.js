@@ -24,6 +24,7 @@ const MusicList = ({ tracks }) => {
             artistName={track.artists[0].name}
             albumName={track.album.name}
             imageUrl={track.album.images[0].url}
+            trackPlayUrl={track.preview_url}
           />
           <Divider variant="inset" component="li" />
         </div>
