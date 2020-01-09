@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 const MusicList = ({ tracks }) => {
   const classes = useStyles();
+  console.log(JSON.stringify(tracks));
 
   return (
     <List className={classes.root}>
@@ -27,8 +28,7 @@ const MusicList = ({ tracks }) => {
               track.album.images.length > 0 ? track.album.images[0].url : null
             }
             trackPlayUrl={track.preview_url}
-            externalPlayUrl={
-              track.preview_url ? null : track.external_urls.spotify
+            externalPlayUrl={ getUrl(track)         
             }
           />
           <Divider variant="inset" component="li" />
@@ -40,6 +40,20 @@ const MusicList = ({ tracks }) => {
 
 MusicList.propTypes = {
   tracks: PropTypes.array.isRequired
+};
+
+function getUrl(track){
+  if (track.preview_url){
+    return null;
+  }
+  else{ 
+    if (track.external_urls !== undefined && track.external_urls.spotify !== undefined)
+    {
+      return track.external_urls.spotify;
+  } else {
+    return null;
+  }
+}
 };
 
 export default MusicList;
