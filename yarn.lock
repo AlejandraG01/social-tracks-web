@@ -8588,6 +8588,11 @@ react-spotify-web-playback@^0.6.0:
     exenv "^1.2.2"
     nano-css "^5.2.0"
 
+react-stars@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/react-stars/-/react-stars-2.2.5.tgz#911852018e1574a0f9a2c1dfa4f0bc9af071b921"
+  integrity sha1-kRhSAY4VdKD5osHfpPC8mvBxuSE=
+
 react-transition-group@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"

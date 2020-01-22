@@ -5,9 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import SlowMotionVideoIcon from "@material-ui/icons/SlowMotionVideo";
 import Grid from "@material-ui/core/Grid";
-import MusicList from "../components/MusicList";
 import { getRecommendations } from "../services/RecommendationsService";
 import GeneratingRecommendations from "../components/GeneratingRecommendations";
+import MusicTabs from "../components/MusicTabs";
 
 const useStyles = makeStyles(theme => ({
   extendedIcon: {
@@ -42,7 +42,7 @@ const RecommendationContainer = ({ loggedUser }) => {
   }, [isGenerating, generateInterval, handleGenerateRecommendation]);
 
   if (isGenerating) return <GeneratingRecommendations />;
-  if (tracks) return <MusicList tracks={tracks} />;
+  if (tracks) return <MusicTabs recommendationTracks={tracks} />;
 
   return (
     <Grid container spacing={3}>

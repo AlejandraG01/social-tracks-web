@@ -11,6 +11,8 @@ import IconButton from "@material-ui/core/IconButton";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import PauseCircleFilledIcon from "@material-ui/icons/PauseCircleFilled";
 import LinkIcon from "@material-ui/icons/Link";
+import Grid from "@material-ui/core/Grid";
+import ReactStars from "react-stars";
 
 const useStyles = makeStyles(theme => ({
   inline: {
@@ -24,7 +26,10 @@ const TrackItem = ({
   artistName,
   albumName,
   trackPlayUrl,
-  externalPlayUrl
+  externalPlayUrl,
+  rating,
+  handleRatingChange,
+  spotifyTrackId
 }) => {
   const classes = useStyles();
   const [playing, setPlaying] = useState(false);
@@ -49,27 +54,35 @@ const TrackItem = ({
     else return <PlayCircleFilledIcon />;
   };
 
+  const renderSecondaryContent = () => (
+    <Grid container direction="column">
+      <Grid item>
+        <Typography
+          component="span"
+          variant="body2"
+          className={classes.inline}
+          color="textPrimary"
+        >
+          {artistName}
+        </Typography>
+        {` — ${albumName}`}
+      </Grid>
+      <Grid item style={{ marginTop: 10 }}>
+        <ReactStars
+          count={5}
+          value={rating}
+          onChange={value => handleRatingChange(spotifyTrackId, value)}
+        />
+      </Grid>
+    </Grid>
+  );
+
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
         <Avatar alt="Album image" src={imageUrl} />
       </ListItemAvatar>
-      <ListItemText
-        primary={name}
-        secondary={
-          <>
-            <Typography
-              component="span"
-              variant="body2"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {artistName}
-            </Typography>
-            {` — ${albumName}`}
-          </>
-        }
-      />
+      <ListItemText primary={name} secondary={renderSecondaryContent()} />
       <ListItemSecondaryAction>
         <IconButton onClick={handlePlay} edge="end" aria-label="delete">
           {renderPlayIcon()}
@@ -84,8 +97,11 @@ TrackItem.propTypes = {
   imageUrl: PropTypes.string,
   artistName: PropTypes.string.isRequired,
   albumName: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  handleRatingChange: PropTypes.func.isRequired,
   trackPlayUrl: PropTypes.string,
-  externalPlayUrl: PropTypes.string
+  externalPlayUrl: PropTypes.string,
+  spotifyTrackId: PropTypes.string
 };
 
 TrackItem.defaultProps = {

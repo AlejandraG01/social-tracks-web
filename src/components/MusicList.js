@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import TrackItem from "./TrackItem";
+import { getRatings, createRating } from "../services/RatingsService";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,7 +15,26 @@ const useStyles = makeStyles(theme => ({
 
 const MusicList = ({ tracks }) => {
   const classes = useStyles();
-  console.log(JSON.stringify(tracks));
+  const [ratings, setRatings] = useState(null);
+
+  useEffect(() => {
+    if (ratings === null) {
+      getRatings().then(ratings => {
+        console.info(ratings);
+        setRatings(ratings);
+      });
+    }
+  }, [ratings]);
+
+  const onRatingChange = (spotifyTrackId, value) => {
+    createRating(spotifyTrackId, value);
+    setRatings({
+      ...ratings,
+      [spotifyTrackId]: value
+    });
+  };
+
+  if (ratings === null) return null;
 
   return (
     <List className={classes.root}>
@@ -28,8 +48,10 @@ const MusicList = ({ tracks }) => {
               track.album.images.length > 0 ? track.album.images[0].url : null
             }
             trackPlayUrl={track.preview_url}
-            externalPlayUrl={ getUrl(track)         
-            }
+            externalPlayUrl={getUrl(track)}
+            rating={ratings[track.id] || 0}
+            handleRatingChange={onRatingChange}
+            spotifyTrackId={track.id}
           />
           <Divider variant="inset" component="li" />
         </div>
@@ -42,18 +64,19 @@ MusicList.propTypes = {
   tracks: PropTypes.array.isRequired
 };
 
-function getUrl(track){
-  if (track.preview_url){
+function getUrl(track) {
+  if (track.preview_url) {
     return null;
-  }
-  else{ 
-    if (track.external_urls !== undefined && track.external_urls.spotify !== undefined)
-    {
-      return track.external_urls.spotify;
   } else {
-    return null;
+    if (
+      track.external_urls !== undefined &&
+      track.external_urls.spotify !== undefined
+    ) {
+      return track.external_urls.spotify;
+    } else {
+      return null;
+    }
   }
 }
-};
 
 export default MusicList;
