@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
 
 const RecommendationContainer = ({ loggedUser }) => {
   const [tracks, setRecommendationTracks] = useState(null);
+  const [tracksWithoutInfluence, setRecommendationWithoutInfluce] = useState(
+    null
+  );
   const [isGenerating, setIsGenerating] = useState(false);
   const [generateInterval, setGenerateInterval] = useState(null);
   const classes = useStyles();
@@ -24,16 +27,19 @@ const RecommendationContainer = ({ loggedUser }) => {
   const handleGenerateRecommendation = useCallback(async () => {
     const { recommendation } = await getRecommendations(loggedUser);
     const recommendationTracks = recommendation.recommendation_tracks;
+    const recommendationWithoutInfluenceTracks =
+      recommendation.recommendations_without_influence_tracks;
     const generatingRecommendation = recommendation.generating_recommendation;
 
-    setIsGenerating(generatingRecommendation);
     setRecommendationTracks(recommendationTracks);
+    setRecommendationWithoutInfluce(recommendationWithoutInfluenceTracks);
+    setIsGenerating(generatingRecommendation);
   }, [loggedUser]);
 
   useEffect(() => {
     if (isGenerating && !generateInterval) {
       setGenerateInterval(
-        setInterval(() => handleGenerateRecommendation(), 1000)
+        setInterval(() => handleGenerateRecommendation(), 60000)
       );
     } else if (!isGenerating && generateInterval) {
       clearInterval(generateInterval);
@@ -42,7 +48,13 @@ const RecommendationContainer = ({ loggedUser }) => {
   }, [isGenerating, generateInterval, handleGenerateRecommendation]);
 
   if (isGenerating) return <GeneratingRecommendations />;
-  if (tracks) return <MusicTabs recommendationTracks={tracks} />;
+  if (tracks && tracksWithoutInfluence)
+    return (
+      <MusicTabs
+        recommendationTracks={tracks}
+        tracksWithoutInfluence={tracksWithoutInfluence}
+      />
+    );
 
   return (
     <Grid container spacing={3}>

@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import MusicList from "../components/MusicList";
 import Container from "@material-ui/core/Container";
 
-const MusicTabs = ({ recommendationTracks }) => {
+const MusicTabs = ({ recommendationTracks, tracksWithoutInfluence }) => {
   const [tabIdx, setTabIdx] = useState(0);
 
   return (
@@ -23,13 +23,15 @@ const MusicTabs = ({ recommendationTracks }) => {
       </AppBar>
       <div style={{ flexGrow: 1 }}>
         {tabIdx === 0 && <MusicList tracks={recommendationTracks} />}
+        {tabIdx === 1 && <MusicList tracks={tracksWithoutInfluence} />}
       </div>
     </Container>
   );
 };
 
 MusicTabs.propTypes = {
-  recommendationTracks: PropTypes.array.isRequired
+  recommendationTracks: PropTypes.array.isRequired,
+  tracksWithoutInfluence: PropTypes.array.isRequired
 };
 
 export default MusicTabs;
