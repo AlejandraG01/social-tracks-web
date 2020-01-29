@@ -17,8 +17,8 @@ const MusicTabs = ({ recommendationTracks, tracksWithoutInfluence }) => {
           onChange={(event, newValue) => setTabIdx(newValue)}
           aria-label="simple tabs example"
         >
-          <Tab label="Recomendações" />
-          <Tab label="Comparação" />
+          <Tab label="Recomendações por influência social" />
+          <Tab label="Recomendações alternativas" />
         </Tabs>
       </AppBar>
       <div style={{ flexGrow: 1 }}>
