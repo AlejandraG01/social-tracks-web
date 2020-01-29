@@ -21,4 +21,5 @@ export const SPOTIFY_SCOPES = 'streaming user-follow-read user-library-read user
 
 const MASTODON_CLIENT_ID =
   "d7abf1a2acaa6e8a0893e74557519cc2dad89a0ae74cff7f3d654bd7844411a9";
-export const MASTODON_AUTH_URL = `https://socialtracks.masto.host/oauth/authorize?scope=read&response_type=code&redirect_uri=http:%2F%2Flocalhost:3001%2Flogin_mastodon&client_id=${MASTODON_CLIENT_ID}`;
+// export const MASTODON_AUTH_URL = `https://socialtracks.masto.host/oauth/authorize?scope=read&response_type=code&redirect_uri=http:%2F%2Flocalhost:3001%2Flogin_mastodon&client_id=${MASTODON_CLIENT_ID}`;
+export const MASTODON_AUTH_URL = `https://socialtracks.masto.host/oauth/authorize?scope=read&response_type=code&redirect_uri=http:%2F%2F3.131.0.107:3001%2Flogin_mastodon&client_id=${MASTODON_CLIENT_ID}`;
