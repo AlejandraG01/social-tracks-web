@@ -14,6 +14,12 @@ import {
 } from "./utils/LoginHandler";
 import ContentContainer from "./containers/ContentContainer";
 import MenuItems from "./components/MenuItems";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useRouteMatch
+} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,6 +77,8 @@ const App = () => {
     logoutUser();
   };
 
+  let { path } = useRouteMatch();
+
   // console.log("TRACK URLS", tracksUrls);
   console.log("LOGGED USER", loggedUser);
 
@@ -93,9 +101,18 @@ const App = () => {
             />
           </Toolbar>
         </AppBar>
-        <Container className={classes.mainContent}>
-          <ContentContainer loggedUser={loggedUser} />
-        </Container>
+
+        <Switch>
+          <Route exact path={path}>
+            <div/>
+          </Route>
+          <Route path={`${path}/recomendar`}>
+            <Container className={classes.mainContent}>
+              <ContentContainer loggedUser={loggedUser} />
+            </Container>
+          </Route>
+        </Switch>
+        
       </div>
     </React.Fragment>
   );
