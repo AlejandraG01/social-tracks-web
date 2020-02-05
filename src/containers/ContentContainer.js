@@ -6,6 +6,9 @@ import RecommendationContainer from "./RecommendationContainer";
 const ContentContainer = ({ loggedUser }) => {
   const userCompletedLogin = loggedUser && loggedUser.mastodon_id;
 
+  console.log('loggedUser: ' + JSON.stringify(loggedUser));
+  console.log('userCompletedLogin: ' + userCompletedLogin);
+
   return userCompletedLogin ? (
     <RecommendationContainer loggedUser={loggedUser} />
   ) : (

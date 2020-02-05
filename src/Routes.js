@@ -6,7 +6,7 @@ export default function BasicExample() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <Route path="/">
           <App />
         </Route>
         <Route path="/login_spotify">

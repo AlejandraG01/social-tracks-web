@@ -70,6 +70,8 @@ const TrackItem = ({
       <Grid item style={{ marginTop: 10 }}>
         <ReactStars
           count={5}
+          size={20}
+          half={false}
           value={rating}
           onChange={value => handleRatingChange(spotifyTrackId, value)}
         />

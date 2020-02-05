@@ -15,11 +15,12 @@ import {
 import ContentContainer from "./containers/ContentContainer";
 import MenuItems from "./components/MenuItems";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   useRouteMatch
 } from "react-router-dom";
+import { SPOTIFY_REDIRECT_URL } from "./config";
+import UnloggedContent from "./components/UnloggedContent";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -77,8 +78,6 @@ const App = () => {
     logoutUser();
   };
 
-  let { path } = useRouteMatch();
-
   // console.log("TRACK URLS", tracksUrls);
   console.log("LOGGED USER", loggedUser);
 
@@ -103,10 +102,12 @@ const App = () => {
         </AppBar>
 
         <Switch>
-          <Route exact path={path}>
-            <div/>
+          <Route exact path="/">
+            <Container className={classes.mainContent}>
+              {loggedUser ? <div/> : (<UnloggedContent></UnloggedContent>)}
+            </Container>
           </Route>
-          <Route path={`${path}/recomendar`}>
+          <Route path="/recomendar">
             <Container className={classes.mainContent}>
               <ContentContainer loggedUser={loggedUser} />
             </Container>
